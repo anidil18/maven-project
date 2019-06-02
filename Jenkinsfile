@@ -29,15 +29,15 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "whoami"
-                        sh "cp -p **/target/*.war /opt/tomcat-staging/webapps"
+                        
+                        sh "cp **/target/*.war /opt/tomcat-staging/webapps"
                     }
 
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "cp -p **/target/*.war /opt/tomcat-prod/webapps"
+                        sh "cp **/target/*.war /opt/tomcat-prod/webapps"
                     }
                 }
             }
