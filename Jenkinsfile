@@ -1,18 +1,20 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Initialize') {
+    stages{
+        stage('Build'){
             steps {
-                sh '''
-                   echo "PATH = ${PATH}"
-                   echo "M2_HOME = ${M2_HOME}"
-                  '''
+                sh 'mvn clean package'
+            }
+            post {
+                success {
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
             }
         }
-        stage('Build') {
+        stage ('Deploy to Staging'){
             steps {
-                echo 'Hello, World!'
+                build job: 'Deploy-to-staging'
             }
         }
     }
